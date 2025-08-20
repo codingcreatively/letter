@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dear Cutie 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at top, #0a0a0a 0%, #000 100%);
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      color: white;
+      position: relative;
+    }
+    * { -webkit-tap-highlight-color: transparent; outline: none; user-select: none; }
+
+    /* Subtle animated background gradient */
+    body::before {
+      content: "";
+      position: absolute;
+      top:0; left:0; width:100%; height:100%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,0,0,0.08), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(255,0,0,0.08), transparent 60%);
+      animation: bgMove 10s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+    @keyframes bgMove {
+      from { transform: translateX(-10px) translateY(-10px); }
+      to   { transform: translateX(10px) translateY(10px); }
+    }
+
+    /* Stars */
+    .stars { position:absolute; width:100%; height:100%; z-index:0; }
+    .star {
+      position:absolute; width:2px; height:2px; background:white;
+      border-radius:50%; opacity:0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle { from{opacity:0.2;} to{opacity:1;} }
+
+    /* Space Lines */
+    .line {
+      position: absolute;
+      width: 2px;
+      height: 150px;
+      background: linear-gradient(to bottom, rgba(255,80,80,0), rgba(255,80,80,0.8), rgba(255,80,80,0));
+      opacity: 0.3;
+      transform: rotate(45deg);
+      animation: lineMove 12s linear infinite;
+      z-index: 0;
+    }
+    @keyframes lineMove {
+      from { transform: translateY(120vh) rotate(45deg); opacity:0; }
+      20%  { opacity:0.5; }
+      80%  { opacity:0.5; }
+      to   { transform: translateY(-120vh) rotate(45deg); opacity:0; }
+    }
+
+    /* Glowing Bloody Moon */
+    .moon {
+      position: absolute; top: 10%; right: 15%;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle at 30% 30%, #ff4d4d, #660000);
+      border-radius: 50%;
+      box-shadow: 0 0 50px #ff1a1a, 0 0 100px #ff3333;
+      animation: moonPulse 4s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes moonPulse {
+      0%,100% { box-shadow: 0 0 40px #ff1a1a, 0 0 80px #ff3333; }
+      50% { box-shadow: 0 0 80px #ff3333, 0 0 160px #ff4d4d; }
+    }
+
+    /* Title */
+    h1 {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 2em;
+      color: #fff;
+      text-shadow: 0 0 15px #ff1a1a, 0 0 30px #ff3333;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    /* Envelope */
+    .envelope {
+      width: 260px; height: 180px;
+      background: #111; border: 2px solid #ff3333;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255,0,0,0.5);
+      position: relative; cursor: pointer;
+      animation: float 3s ease-in-out infinite, envelopeGlow 4s ease-in-out infinite;
+      z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Flap */
+    .flap {
+      position: absolute; top:0; left:0;
+      width:100%; height:90px; background:#2d0000;
+      clip-path: polygon(0 0,100% 0,50% 100%);
+      border-radius:12px 12px 0 0;
+      transform-origin: top center;
+      transition: transform .6s ease;
+      z-index: 3;
+    }
+    .flap.open { transform: rotateX(160deg); }
+
+    /* Envelope Outline (bottom triangle) */
+    .envelope::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 90px;
+      background: #1a0000;
+      clip-path: polygon(0 100%,50% 0,100% 100%);
+      border-radius: 0 0 12px 12px;
+      z-index: 1;
+    }
+
+    /* Wax Seal */
+    .seal {
+      position: absolute;
+      top: 50px; left: 50%;
+      transform: translateX(-50%);
+      width: 45px; height: 45px;
+      background: radial-gradient(circle at 30% 30%, #ff6666, #990000);
+      border-radius: 50%;
+      border: 2px solid #660000;
+      box-shadow: 0 0 15px rgba(255,0,0,0.8), inset 0 0 10px rgba(0,0,0,0.5);
+      z-index: 4;
+      animation: sealBeat 1.8s infinite ease-in-out;
+    }
+    .seal::after {
+      content: "❤";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-size: 1.2em;
+      color: white;
+      text-shadow: 0 0 5px #ff3333;
+    }
+    @keyframes sealBeat {
+      0%,100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 15px rgba(255,0,0,0.8); }
+      50% { transform: translateX(-50%) scale(1.1); box-shadow: 0 0 25px rgba(255,0,0,1); }
+    }
+
+    @keyframes glowBlink {
+      from { opacity:0.6; }
+      to   { opacity:1; }
+    }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+    @keyframes envelopeGlow {
+      0%,100% { box-shadow: 0 0 25px rgba(255,0,0,0.5), 0 0 50px rgba(255,0,0,0.2); }
+      50% { box-shadow: 0 0 50px rgba(255,0,0,0.9), 0 0 100px rgba(255,0,0,0.4); }
+    }
+
+    /* Overlay & Popup */
+    .overlay { position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.7); display:none; z-index:4; }
+    .overlay.show { display:block; }
+
+    .popup {
+      position:fixed; top:50%; left:50%;
+      width:90%; max-width:380px; max-height:70%; overflow-y:auto;
+      transform:translate(-50%,-50%) scale(0);
+      background:rgba(20,20,20,0.95);
+      border:2px solid #660000; border-radius:15px; padding:20px;
+      box-shadow:0 0 40px rgba(255,0,0,0.4);
+      text-align:center; transition:transform .4s ease; z-index:5;
+    }
+    .popup.show { transform:translate(-50%,-50%) scale(1); }
+    .popup h2 { font-family:'Brush Script MT',cursive; color:#ff4d4d; text-shadow:0 0 10px #ff0000; }
+    .popup p { font-size:1em; line-height:1.6em; margin:12px 0; }
+    .close-btn {
+      margin-top:15px; padding:10px 20px;
+      background:#ff1a1a; border:none; border-radius:8px; color:white;
+      font-size:1em; cursor:pointer; box-shadow:0 0 15px #ff3333;
+    }
+    .close-btn:active { transform:scale(0.95); }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  <div class="moon"></div>
+
+  <!-- space lines -->
+  <div id="lines"></div>
+
+  <h1>Tap the Envelope 💌</h1>
+
+  <div class="envelope" onclick="openLetter()">
+    <div class="flap" id="flap"></div>
+    <div class="seal"></div>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+  <div class="popup" id="lovePopup">
+    <h2>Dear Cutie 💖</h2>
+    <p>From the very first day our eyes met, my heart knew it had finally found its home in you. ✨</p>
+    <p>No matter how far the distance or how heavy the storms, my love for you remains unshaken 💕</p>
+    <p>I promise to love you not only in the bright days of laughter but also in the quiet nights of tears. To stand by you, to protect you, and to cherish you - today, tomorrow, and for all the lifetimes to come. 🌙</p>
+    <p>With endless love, always yours…<br><strong>From: Sujoy</strong> 💌</p>
+    <button class="close-btn" onclick="closePopup()">Close</button>
+  </div>
+
+  <!-- Music -->
+  <audio id="loveSong" src="lovemp3.mp3"></audio>
+
+  <script>
+    const popup = document.getElementById('lovePopup');
+    const overlay = document.getElementById('overlay');
+    const flap = document.getElementById('flap');
+    const song = document.getElementById('loveSong');
+    let isOpen = false;
+
+    function openLetter() {
+      if (!isOpen) {
+        flap.classList.add("open");
+        setTimeout(() => {
+          overlay.classList.add("show");
+          popup.classList.add("show");
+          song.play();
+        }, 700);
+        isOpen = true;
+      }
+    }
+    function closePopup() {
+      overlay.classList.remove("show");
+      popup.classList.remove("show");
+      song.pause();
+      song.currentTime = 0;
+      setTimeout(() => flap.classList.remove("open"), 400);
+      isOpen = false;
+    }
+
+    // Stars
+    const starContainer = document.getElementById("stars");
+    for (let i=0;i<120;i++){
+      const star=document.createElement("div");
+      star.className="star";
+      star.style.top=Math.random()*100+"%";
+      star.style.left=Math.random()*100+"%";
+      star.style.animationDelay=(Math.random()*2)+"s";
+      starContainer.appendChild(star);
+    }
+
+    // Space lines
+    const lineContainer = document.getElementById("lines");
+    for (let i=0;i<8;i++){
+      const line=document.createElement("div");
+      line.className="line";
+      line.style.left=Math.random()*100+"%";
+      line.style.animationDelay=(Math.random()*10)+"s";
+      lineContainer.appendChild(line);
+    }
+  </script>
+</body>
+</html>
